@@ -1,0 +1,45 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.so
+
+# Virtual environment
+.venv/
+env/
+venv/
+
+# VS Code settings
+.vscode/
+
+# Environment variables
+.env
+
+# Database files
+*.sqlite3
+*.db
+
+# macOS system files
+.DS_Store
+
+# PyCharm
+.idea/
+
+# Logs
+*.log
+
+# Pytest cache
+.pytest_cache/
+
+# Migrations (optional if you're using Alembic or Django-style)
+migrations/
+
+# Coverage reports
+htmlcov/
+.coverage
+
+# MyPy
+.mypy_cache/
+
+# FastAPI static files (optional, if using uploads/static dirs)
+uploads/
+static/
