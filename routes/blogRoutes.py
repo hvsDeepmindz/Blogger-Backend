@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException, Depends, status
 from sqlalchemy.orm import Session
 from db.database import SessionLocal
-from models.blog import TbITBlog
-from schemas.schemas import BlogCreate, BlogResponse, BlogSuccessResponse
+from models.blogModel import TbITBlog
+from schemas.blogSchemas import BlogCreate, BlogResponse, BlogSuccessResponse
 from typing import List
 
 router = APIRouter()

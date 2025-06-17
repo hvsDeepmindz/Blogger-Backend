@@ -1,8 +1,10 @@
 from pydantic import BaseModel
 
+
 class BlogCreate(BaseModel):
     name: str
     desc: str
+
 
 class BlogResponse(BaseModel):
     id: int
@@ -11,6 +13,7 @@ class BlogResponse(BaseModel):
 
     class Config:
         orm_mode = True
+
 
 class BlogSuccessResponse(BaseModel):
     message: str
