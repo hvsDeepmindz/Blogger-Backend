@@ -7,3 +7,4 @@ class TbITBlog(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, nullable=False, unique=True)
     desc = Column(String, nullable=False)
+    domain = Column(String, nullable=False)
