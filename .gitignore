@@ -42,4 +42,5 @@ htmlcov/
 
 # FastAPI static files (optional, if using uploads/static dirs)
 uploads/
+uploaded_imgs/
 static/
