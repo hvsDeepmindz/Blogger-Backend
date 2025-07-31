@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from db.database import SessionLocal
 from models.blogModel import TbITBlog
 from schemas.blogSchemas import BlogCreate, BlogResponse, BlogSuccessResponse
-from typing import List
+from typing import List, Optional
 
 router = APIRouter()
 
@@ -49,9 +49,11 @@ def get_all_blogs(db: Session = Depends(get_db)):
 
 
 @router.get(
-    "/blogs/search", response_model=List[BlogResponse], status_code=status.HTTP_200_OK
+    "/blogs/search",
+    response_model=List[BlogResponse],
+    status_code=status.HTTP_200_OK,
 )
-def search_blogs(query: str = Query(..., min_length=1), db: Session = Depends(get_db)):
+def search_blogs(query: Optional[str] = Query(""), db: Session = Depends(get_db)):
     results = db.query(TbITBlog).filter(TbITBlog.name.ilike(f"%{query}%")).all()
     if not results:
         raise HTTPException(
@@ -59,6 +61,26 @@ def search_blogs(query: str = Query(..., min_length=1), db: Session = Depends(ge
             detail="No blogs found matching your search query.",
         )
     return results
+
+
+@router.get(
+    "/blogs/sort",
+    response_model=List[BlogResponse],
+    status_code=status.HTTP_200_OK,
+)
+def sort_blogs(name: Optional[str] = Query(None), db: Session = Depends(get_db)):
+    query = db.query(TbITBlog)
+    if name is None:
+        return query.all()
+    elif name.lower() == "asc":
+        return query.order_by(TbITBlog.name.asc()).all()
+    elif name.lower() == "desc":
+        return query.order_by(TbITBlog.name.desc()).all()
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid sort option. Use 'asc' or 'desc'.",
+        )
 
 
 @router.put(
