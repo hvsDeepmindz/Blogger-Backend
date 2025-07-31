@@ -76,7 +76,7 @@ def sort_blogs(name: Optional[str] = Query(None), db: Session = Depends(get_db))
         return query.order_by(TbITBlog.name.asc()).all()
     elif name.lower() == "desc":
         return query.order_by(TbITBlog.name.desc()).all()
-    else:
+    else:   
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Invalid sort option. Use 'asc' or 'desc'.",
