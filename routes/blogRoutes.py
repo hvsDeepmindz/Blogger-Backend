@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Depends, status
+from fastapi import APIRouter, HTTPException, Depends, status, Query
 from sqlalchemy.orm import Session
 from db.database import SessionLocal
 from models.blogModel import TbITBlog
@@ -46,6 +46,19 @@ def create_blog(blog: BlogCreate, db: Session = Depends(get_db)):
 def get_all_blogs(db: Session = Depends(get_db)):
     blogs = db.query(TbITBlog).all()
     return blogs
+
+
+@router.get(
+    "/blogs/search", response_model=List[BlogResponse], status_code=status.HTTP_200_OK
+)
+def search_blogs(query: str = Query(..., min_length=1), db: Session = Depends(get_db)):
+    results = db.query(TbITBlog).filter(TbITBlog.name.ilike(f"%{query}%")).all()
+    if not results:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="No blogs found matching your search query.",
+        )
+    return results
 
 
 @router.put(
